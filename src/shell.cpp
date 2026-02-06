@@ -3,6 +3,7 @@
 #include "token.h"
 #include "ASTNode.h"
 #include "AST_executor.h"
+#include "signal_handler.h"
 
 
 #include<iostream>
@@ -17,6 +18,8 @@ void Shell::printPrompt()
 
 void Shell::run()
 {
+    SignalHandler::setupShellSignals();
+
     std::string command;
     Tokenizer tokenizer;
     ASTExecutor executor;

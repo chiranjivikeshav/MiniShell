@@ -6,7 +6,7 @@
 #include <vector>
 #include <string>
 #include <fcntl.h>
-#include <cstdlib>
+#include <signal_handler.h>
 
 int Executor::execute(const Command& cmd)
 {
@@ -33,6 +33,8 @@ int Executor::handleChildProcess(const Command& cmd)
 
     if (pid == 0)
     {
+        SignalHandler::setupChildSignals();
+
         std::vector<char*> argv;
         for (const auto& arg : cmd.args)
             argv.push_back(const_cast<char*>(arg.c_str()));

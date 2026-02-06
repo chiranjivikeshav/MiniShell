@@ -5,6 +5,7 @@
 #include <iostream>
 #include "executor.h"
 #include "subshellNode.h"
+#include "signal_handler.h"
 
 int ASTExecutor::execute(const ASTNode* node)
 {
@@ -90,6 +91,7 @@ int ASTExecutor::executeSubshell(const ASTNode* subtree)
     pid_t pid = fork();
     if (pid == 0)
     {
+        SignalHandler::setupChildSignals();
         const int status = execute(subtree);
         _exit(status);
     }
