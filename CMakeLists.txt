@@ -13,5 +13,6 @@ add_executable(minishell
         src/parser.cpp
         src/token.cpp
         src/AST_executor.cpp
+        src/signal_handler.cpp
 )
 
