@@ -9,10 +9,28 @@
 #include<iostream>
 #include<string>
 #include<memory>
+#include <unistd.h>    // getcwd
+#include <limits.h>    // PATH_MAX
+#include <cstdlib>     // getenv
 
 void Shell::printPrompt()
 {
-    std::cout<<"$ ";
+    char cwd[PATH_MAX];
+    const char* home = getenv("HOME");
+
+    std::cout << "\033[1;32mMiniShell\033[0m:";
+
+    if (getcwd(cwd, sizeof(cwd)) != nullptr) {
+        std::string path(cwd);
+        if (home && path.find(home) == 0)
+            path.replace(0, std::string(home).length(), "~");
+
+        std::cout << "\033[1;34m" << path << "\033[0m";
+    } else {
+        std::cout << "?";
+    }
+
+    std::cout << "$ ";
     std::cout.flush();
 }
 
