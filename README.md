@@ -1,5 +1,7 @@
 # Mini-Linux-Shell
 A Unix-style mini shell implemented in C++ that supports complex command parsing and execution using an AST-based architecture.
+
+![Demo](demo.png)
 # Featured Implemented
 - Execution of external commands using `fork`, `execvp`, and `waitpid`.
 - Abstract Syntax Tree (AST) – based parsing for complex command structures.
@@ -14,6 +16,7 @@ A Unix-style mini shell implemented in C++ that supports complex command parsing
 - Built-in commands like `cd`, `exit`, etc.
 - Accurate exit-status propagation enabling correct short-circuit logic.
 - Parent/child process separation for built-ins and subshells.
+- Signal handling: Supports Ctrl+C interruption for foreground commands and subshell execution, with signal isolation between parent shell and child processes.
 # Architecture Overview
 The shell follows a modular design:
 > **Tokenizer → Parser → AST → Executor**
