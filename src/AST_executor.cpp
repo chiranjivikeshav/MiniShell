@@ -82,6 +82,11 @@ int ASTExecutor::execute(const ASTNode* node)
             const auto sub = dynamic_cast<const SubshellNode*>(node);
             return executeSubshell(sub->child.get());
         }
+
+    case NodeType::BACKGROUND:
+        {
+            return executeBackground(node->left.get());
+        }
     }
     return 0;
 }
@@ -89,6 +94,10 @@ int ASTExecutor::execute(const ASTNode* node)
 int ASTExecutor::executeSubshell(const ASTNode* subtree)
 {
     pid_t pid = fork();
+    if (pid < 0) {
+        perror("fork");
+        return 1;
+    }
     if (pid == 0)
     {
         SignalHandler::setupChildSignals();
@@ -100,4 +109,20 @@ int ASTExecutor::executeSubshell(const ASTNode* subtree)
     if (WIFEXITED(status))
         return WEXITSTATUS(status);
     return 1;
+}
+
+int ASTExecutor::executeBackground(const ASTNode* subtree)
+{
+    pid_t pid = fork();
+    if (pid < 0) {
+        perror("fork");
+        return 1;
+    }
+    if (pid == 0)
+    {
+        const int status = execute(subtree);
+        _exit(status);
+    }
+    std::cout << "[+] " << pid << std::endl;
+    return 0;
 }

@@ -8,6 +8,7 @@ class ASTExecutor
     public:
     int execute(const ASTNode* node);
     int executeSubshell(const ASTNode* node);
+    int executeBackground(const ASTNode* node);
 };
 
 #endif

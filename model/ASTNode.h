@@ -9,7 +9,8 @@ enum class NodeType {
     SEQUENCE,    // ;
     AND,         // &&
     OR,          // ||
-    SUBSHELL     // ()
+    SUBSHELL,    // ()
+    BACKGROUND   // &
 };
 
 struct ASTNode
