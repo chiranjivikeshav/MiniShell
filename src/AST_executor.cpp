@@ -15,7 +15,7 @@ int ASTExecutor::execute(const ASTNode* node)
     {
     case NodeType::COMMAND:
         {
-            auto* cmd = static_cast<const Command*>(node);
+            auto* cmd = dynamic_cast<const Command*>(node);
             Executor exec;
             return exec.execute(*cmd);
         }
@@ -71,7 +71,7 @@ int ASTExecutor::execute(const ASTNode* node)
             close(fd[0]);
             close(fd[1]);
 
-            int status;
+            int status = 0;
             waitpid(leftPid, &status, 0);
             waitpid(rightPid, &status, 0);
             return WEXITSTATUS(status);
@@ -95,7 +95,7 @@ int ASTExecutor::executeSubshell(const ASTNode* subtree)
         const int status = execute(subtree);
         _exit(status);
     }
-    int status;
+    int status = 0;
     waitpid(pid, &status, 0);
     if (WIFEXITED(status))
         return WEXITSTATUS(status);

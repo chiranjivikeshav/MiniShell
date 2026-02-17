@@ -46,7 +46,7 @@ int Executor::handleChildProcess(const Command& cmd)
         perror("execution failed");
         _exit(127);
     }
-    int status;
+    int status = 0;
     waitpid(pid, &status, 0);
     if (WIFEXITED(status))
         return WEXITSTATUS(status);

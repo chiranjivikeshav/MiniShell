@@ -3,7 +3,7 @@
 #include <sstream>
 #include "subshellNode.h"
 
-Parser::Parser(std::vector<Token>& t):tokens(t), pos(0)
+Parser::Parser(std::vector<Token>& t):tokens(t)
 {
 
 }
