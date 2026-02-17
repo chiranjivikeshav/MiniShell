@@ -48,7 +48,7 @@ mkdir build
 cd build
 cmake ..
 make
-./minishell 
+./minishell  or gnome-terminal -- ./minishell (for new tab in terminal)
 ```
 # Limitations
 While testing commands, ensure that whitespace is added between consecutive tokens.\
