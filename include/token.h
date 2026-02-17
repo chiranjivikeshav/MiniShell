@@ -13,6 +13,7 @@ enum class TokenType {
     REDIRECT,   // > >> < 2>
     LPAREN,     // (
     RPAREN,     // )
+    BACKGROUND, // &
     END
 };
 

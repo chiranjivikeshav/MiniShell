@@ -16,14 +16,34 @@ std::unique_ptr<ASTNode> Parser::parse()
 std::unique_ptr<ASTNode> Parser::parseSequence() {
     auto node = parseLogical();
 
-    while (match(TokenType::SEQUENCE)) {
+    while (true) {
+        if (match(TokenType::SEQUENCE))
+        {
+            auto right = parseLogical();
+            auto parent = std::make_unique<ASTNode>();
+            parent->type = NodeType::SEQUENCE;
+            parent->left = std::move(node);
+            parent->right = std::move(right);
+            node = std::move(parent);
+        }
+        else if (match(TokenType::BACKGROUND))
+        {
+            auto bg = std::make_unique<ASTNode>();
+            bg->type = NodeType::BACKGROUND;
+            bg->left = std::move(node);
+            node = std::move(bg);
 
-        auto right = parseLogical();
-        auto parent = std::make_unique<ASTNode>();
-        parent->type = NodeType::SEQUENCE;
-        parent->left = std::move(node);
-        parent->right = std::move(right);
-        node = std::move(parent);
+            auto right = parseLogical();
+            auto parent = std::make_unique<ASTNode>();
+            parent->type = NodeType::SEQUENCE;
+            parent->left = std::move(node);
+            parent->right = std::move(right);
+            node = std::move(parent);
+        }
+        else
+        {
+            break;
+        }
     }
     return node;
 }

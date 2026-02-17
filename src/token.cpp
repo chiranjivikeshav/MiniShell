@@ -14,6 +14,7 @@ std::vector<Token> Tokenizer::tokenize(const std::string& input) {
         else if (s == ";") tokens.push_back({TokenType::SEQUENCE, s});
         else if (s == "(") tokens.push_back({TokenType::LPAREN, s});
         else if (s == ")") tokens.push_back({TokenType::RPAREN, s});
+        else if (s == "&") tokens.push_back({TokenType::BACKGROUND, s});
         else if (s == ">" || s == ">>" || s == "<" || s == "2>")
             tokens.push_back({TokenType::REDIRECT, s});
         else
