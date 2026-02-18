@@ -1,0 +1,7 @@
+Package: minishell
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Maintainer: Chiranjivi Keshav chiranjivikeshavjnvm@gmail.com
+Description: MiniShell - Custom Unix-like Shell A Unix-style shell built in C++. Supports pipelines, redirections, logical operators, subshells, background execution, and signal handling.
