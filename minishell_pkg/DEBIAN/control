@@ -1,7 +1,11 @@
-Package: minishell
-Version: 1.0
+Package: mnsh
+Version: 1.0.0
 Section: utils
 Priority: optional
 Architecture: amd64
-Maintainer: Chiranjivi Keshav chiranjivikeshavjnvm@gmail.com
-Description: MiniShell - Custom Unix-like Shell A Unix-style shell built in C++. Supports pipelines, redirections, logical operators, subshells, background execution, and signal handling.
+Maintainer: Maintainer: Chiranjivi Keshav <chiranjivikeshavjnvm@gmail.com>
+Description: MiniShell - A Unix-style shell built in C++
+ MiniShell (mnsh) is a Unix-style command-line shell
+ implemented in C++. It supports pipelines,
+ I/O redirection, logical operators, subshells,
+ background execution, and signal handling.

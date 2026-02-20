@@ -18,7 +18,7 @@ void Shell::printPrompt()
     char cwd[PATH_MAX];
     const char* home = getenv("HOME");
 
-    std::cout << "\033[1;32mMiniShell\033[0m:";
+    std::cout << "\033[1;32mmnsh\033[0m$";
 
     if (getcwd(cwd, sizeof(cwd)) != nullptr) {
         std::string path(cwd);

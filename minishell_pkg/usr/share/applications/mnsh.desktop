@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=MiniShell
-Comment=Custom Unix-like Shell
-Exec=minishell
-Icon=minishell
+Comment=Custom Unix-style command-line shell
+Exec=mnsh
+Icon=mnsh
 Terminal=true
 Type=Application
 Categories=System;TerminalEmulator;

@@ -1,7 +1,6 @@
-# Mini-Linux-Shell
-A Unix-style mini shell implemented in C++ that supports complex command parsing and execution using an AST-based architecture.
-
-![Demo](demo.png)
+# MiniShell (mnsh) 
+A Unix-style command-line shell for Linux distributions built in C++ with AST-based command parsing and execution.
+[//]: # (![Demo]&#40;demo.png&#41;)
 # Featured Implemented
 - Execution of external commands using `fork`, `execvp`, and `waitpid`.
 - Abstract Syntax Tree (AST) – based parsing for complex command structures.
@@ -48,7 +47,7 @@ mkdir build
 cd build
 cmake ..
 make
-./minishell  or gnome-terminal -- ./minishell (for new tab in terminal)
+./mnsh  or gnome-terminal -- ./mnsh (for new tab in terminal)
 ```
 # Limitations
 While testing commands, ensure that whitespace is added between consecutive tokens.\

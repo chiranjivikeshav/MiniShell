@@ -1,15 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
-project(minishell)
+
+project(mnsh VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_CLANG_TIDY clang-tidy)
-set(MINISHELL_VERSION "1.0")
 
-include_directories(include model)
-add_compile_definitions(MINISHELL_VERSION="${MINISHELL_VERSION}")
-
-add_executable(minishell
+add_executable(mnsh
         main.cpp
         src/shell.cpp
         src/executor.cpp
@@ -19,3 +16,8 @@ add_executable(minishell
         src/signal_handler.cpp
 )
 
+target_include_directories(mnsh PRIVATE include model)
+
+target_compile_definitions(mnsh
+        PRIVATE MINISHELL_VERSION="${PROJECT_VERSION}"
+)

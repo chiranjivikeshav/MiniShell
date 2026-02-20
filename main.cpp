@@ -3,7 +3,7 @@
 #include <string>
 
 void print_version() {
-    std::cout << "minishell " << MINISHELL_VERSION << "\n";
+    std::cout << "MiniShell " << MINISHELL_VERSION << "\n";
 }
 
 int main(int argc, char* argv[]) {
