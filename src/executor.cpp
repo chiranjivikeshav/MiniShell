@@ -1,4 +1,5 @@
 #include "executor.h"
+#include "history.h"
 
 #include <unistd.h>
 #include <sys/wait.h>
@@ -10,6 +11,10 @@
 
 int Executor::execute(const Command& cmd)
 {
+    if (cmd.name.empty())
+    {
+        return 0;
+    }
     if (cmd.name == "exit")
     {
         exit(0);
@@ -17,6 +22,10 @@ int Executor::execute(const Command& cmd)
     if (cmd.name == "cd")
     {
         return handleCD(cmd);
+    }
+    if (cmd.name == "history")
+    {
+        return handleHistory(cmd);
     }
     return handleChildProcess(cmd);
 }
@@ -105,4 +114,30 @@ void Executor::redirect(const int targetFd, const std::string& file, const int f
     }
 
     close(fd);
+}
+
+int Executor::handleHistory(const Command& cmd)
+{
+    History history;
+    if (cmd.args.size() == 1)
+    {
+        history.show();
+        return 0;
+    }
+    try
+    {
+        int n = std::stoi(cmd.args[1]);
+        if (n < 0)
+        {
+            std::cerr << "history: invalid argument\n";
+            return 1;
+        }
+        history.show(n);
+        return 0;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "history: numeric argument required" << std::endl;
+    }
+    return 1;
 }

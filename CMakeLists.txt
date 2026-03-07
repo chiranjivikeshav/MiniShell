@@ -14,6 +14,7 @@ add_executable(mnsh
         src/token.cpp
         src/AST_executor.cpp
         src/signal_handler.cpp
+        src/history.cpp
 )
 
 target_include_directories(mnsh PRIVATE include model)

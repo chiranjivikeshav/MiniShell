@@ -4,6 +4,7 @@
 #include "ASTNode.h"
 #include "AST_executor.h"
 #include "signal_handler.h"
+#include "history.h"
 
 
 #include<iostream>
@@ -11,14 +12,13 @@
 #include<memory>
 #include <unistd.h>    // getcwd
 #include <limits.h>    // PATH_MAX
-#include <cstdlib>     // getenv
 
 void Shell::printPrompt()
 {
     char cwd[PATH_MAX];
     const char* home = getenv("HOME");
 
-    std::cout << "\033[1;32mmnsh\033[0m$";
+    std::cout << "\033[1;32mmnsh\033[0m:";
 
     if (getcwd(cwd, sizeof(cwd)) != nullptr) {
         std::string path(cwd);
@@ -39,6 +39,7 @@ void Shell::run()
     SignalHandler::setupShellSignals();
 
     std::string command;
+    History history;
     Tokenizer tokenizer;
     ASTExecutor executor;
     while (true)
@@ -52,6 +53,7 @@ void Shell::run()
         {
             continue;
         }
+        history.add(command);
 
         std::vector<Token> tokens = tokenizer.tokenize(command);
         Parser parser(tokens);
