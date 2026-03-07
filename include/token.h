@@ -26,6 +26,8 @@ class Tokenizer
 {
     public:
     std::vector<Token> tokenize(const std::string& input);
-
+    static bool parseTwoCharOperator(const std::string& input, size_t& i, std::vector<Token>& tokens);
+    static bool parseOneCharOperator(const std::string& input, size_t& i, std::vector<Token>& tokens);
+    static void parseWord(const std::string& input, size_t& i, std::vector<Token>& tokens);
 };
 #endif

@@ -49,10 +49,5 @@ cmake ..
 make
 ./mnsh  or gnome-terminal -- ./mnsh (for new tab in terminal)
 ```
-# Limitations
-While testing commands, ensure that whitespace is added between consecutive tokens.\
-For examples:
-- `(ls)` → `( ls )`
-- `pwd; ls` → `pwd ; ls` 
 ### Connect with Me
 - LinkedIn: https://www.linkedin.com/in/chiranjivi-keshav-907156232/
