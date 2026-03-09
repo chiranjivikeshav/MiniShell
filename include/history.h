@@ -8,13 +8,14 @@
 class History {
     static std::vector<std::string> commands;
     static std::string history_file;
-    const size_t MAX_HISTORY = 1000;
+    static constexpr int MAX_HISTORY_SHOW = 1000;
 public:
     History();
 
     void loadHistory();
     static void saveHistory();
-    void add(const std::string& cmd);
+    static void add(const std::string& cmd);
+    static std::string getBack();
     static void show(int n = INT_MAX);
     static std::string get(int index);
 };

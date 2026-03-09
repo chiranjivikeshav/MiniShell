@@ -22,9 +22,6 @@ void History::add(const std::string& cmd)
     if (cmd.empty()) return;
     if (commands.empty() || commands.back() != cmd)
         commands.push_back(cmd);
-
-    while(commands.size() > MAX_HISTORY)
-        commands.erase(commands.begin());
 }
 
 void History::show(int n)
@@ -32,6 +29,7 @@ void History::show(int n)
     int size = int(commands.size());
     if (n == INT_MAX || n > size)
         n = size;
+    n = std::min(n, MAX_HISTORY_SHOW);
 
     int start = size - n;
 
@@ -47,6 +45,12 @@ std::string History::get(int index)
         return "";
 
     return commands[index];
+}
+
+std::string History::getBack()
+{
+    if (commands.empty()) return "";
+    return commands.back();
 }
 
 void History::loadHistory()

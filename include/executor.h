@@ -15,6 +15,7 @@ private:
     void redirect(int targetFd, const std::string& file, int flags);
     int handleChildProcess(const Command& cmd);
     int handleHistory(const Command& cmd);
+    int handleHistoryExpansion(const Command& cmd);
 };
 
 #endif

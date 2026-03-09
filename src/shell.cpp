@@ -53,7 +53,7 @@ void Shell::run()
         {
             continue;
         }
-        history.add(command);
+        if (command.find('!') == std::string::npos) history.add(command);
 
         std::vector<Token> tokens = tokenizer.tokenize(command);
         Parser parser(tokens);

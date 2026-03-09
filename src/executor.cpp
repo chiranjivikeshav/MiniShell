@@ -1,5 +1,8 @@
 #include "executor.h"
 #include "history.h"
+#include "AST_executor.h"
+#include "parser.h"
+#include "token.h"
 
 #include <unistd.h>
 #include <sys/wait.h>
@@ -27,6 +30,10 @@ int Executor::execute(const Command& cmd)
     if (cmd.name == "history")
     {
         return handleHistory(cmd);
+    }
+    if (!cmd.name.empty() && cmd.name[0] == '!')
+    {
+        return handleHistoryExpansion(cmd);
     }
     return handleChildProcess(cmd);
 }
@@ -140,4 +147,51 @@ int Executor::handleHistory(const Command& cmd)
         std::cerr << "history: numeric argument required" << std::endl;
     }
     return 1;
+}
+
+int Executor::handleHistoryExpansion(const Command& cmd)
+{
+    std::string command;
+
+    if (cmd.name == "!!")
+    {
+        command = History::getBack();
+        if (command.empty())
+        {
+            std::cerr << "mnsh: !!: event not found\n";
+            return 1;
+        }
+    }
+    else
+    {
+        try
+        {
+            int id = std::stoi(cmd.name.substr(1));
+            command = History::get(id-1);
+            if (command.empty())
+            {
+                std::cerr << "mnsh: !!: event not found\n";
+                return 1;
+            }
+        }
+        catch ( const std::exception& e )
+        {
+            std::cerr << "mnsh: " << cmd.name << ": event not found\n";
+            return 1;
+        }
+    }
+
+    // print expanded command
+    std::cout << command << std::endl;
+
+    // add executed command back to history
+    History::add(command);
+
+    // execute command
+    Tokenizer tokenizer;
+    ASTExecutor executor;
+    std::vector<Token> tokens = tokenizer.tokenize(command);
+    Parser parser(tokens);
+    std::unique_ptr<ASTNode> root = parser.parse();
+    return executor.execute(root.get());
 }
