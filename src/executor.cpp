@@ -17,6 +17,7 @@ int Executor::execute(const Command& cmd)
     }
     if (cmd.name == "exit")
     {
+        History::saveHistory();
         exit(0);
     }
     if (cmd.name == "cd")
@@ -118,10 +119,9 @@ void Executor::redirect(const int targetFd, const std::string& file, const int f
 
 int Executor::handleHistory(const Command& cmd)
 {
-    History history;
     if (cmd.args.size() == 1)
     {
-        history.show();
+        History::show();
         return 0;
     }
     try
@@ -132,7 +132,7 @@ int Executor::handleHistory(const Command& cmd)
             std::cerr << "history: invalid argument\n";
             return 1;
         }
-        history.show(n);
+        History::show(n);
         return 0;
     }
     catch (const std::exception& e)
