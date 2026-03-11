@@ -1,8 +1,10 @@
 [Desktop Entry]
+Version=1.0.0
 Name=MiniShell
 Comment=Custom Unix-style command-line shell
 Exec=mnsh
 Icon=mnsh
 Terminal=true
 Type=Application
-Categories=System;TerminalEmulator;
+Categories=System;Utility;
+StartupNotify=false

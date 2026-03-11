@@ -6,8 +6,12 @@ void print_version() {
     std::cout << "MiniShell " << MINISHELL_VERSION << "\n";
 }
 
-int main(int argc, char* argv[]) {
+void updateTitle() {
+    std::cout << "\033]0;MiniShell\007";
+}
 
+int main(int argc, char* argv[]) {
+    updateTitle();
     if (argc > 1) {
         std::string arg = argv[1];
 
