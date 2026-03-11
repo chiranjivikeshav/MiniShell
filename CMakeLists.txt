@@ -4,7 +4,9 @@ project(mnsh VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_CLANG_TIDY clang-tidy)
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(CMAKE_CXX_CLANG_TIDY clang-tidy)
+endif()
 
 add_executable(mnsh
         main.cpp
