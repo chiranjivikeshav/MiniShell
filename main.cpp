@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "line_editor.h"
 #include <iostream>
 #include <string>
 
@@ -12,6 +13,11 @@ void updateTitle() {
 
 int main(int argc, char* argv[]) {
     updateTitle();
+
+    // raw terminal mode enable and disable on exit
+    LineEditor::enableRawMode();
+    atexit(LineEditor::disableRawMode);
+
     if (argc > 1) {
         std::string arg = argv[1];
 
