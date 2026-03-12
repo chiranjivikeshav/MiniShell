@@ -9,6 +9,7 @@ class History {
     static std::vector<std::string> commands;
     static std::string history_file;
     static constexpr int MAX_HISTORY_SHOW = 1000;
+    static int up_down_index;
 public:
     History();
 
@@ -18,6 +19,9 @@ public:
     static std::string getBack();
     static void show(int n = INT_MAX);
     static std::string get(int index);
+    static std::string previousHistory();
+    static std::string nextHistory();
+    static void resetUpDownIndex();
 };
 
 #endif

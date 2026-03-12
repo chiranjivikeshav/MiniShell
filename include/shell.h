@@ -4,9 +4,6 @@
 class Shell {
 public:
     void run();
-
-private:
-    void printPrompt();
 };
 
 #endif

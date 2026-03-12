@@ -6,6 +6,8 @@
 
 std::vector<std::string>History::commands;
 std::string History:: history_file;
+int History:: up_down_index;
+
 History::History()
 {
     const char* home = getenv("HOME");
@@ -15,6 +17,8 @@ History::History()
     else
         history_file = ".mnsh_history";
     loadHistory();
+
+    up_down_index = commands.size();
 }
 
 void History::add(const std::string& cmd)
@@ -72,4 +76,34 @@ void History::saveHistory()
 
     for (const auto& cmd : commands)
         out << cmd << "\n";
+}
+
+// For Line editor
+std::string History::previousHistory()
+{
+    if (commands.empty()) return "";
+
+    if (up_down_index > 0)
+        up_down_index--;
+
+    return commands[up_down_index];
+}
+
+std::string History::nextHistory()
+{
+    if (commands.empty()) return "";
+
+    if (up_down_index < commands.size() - 1)
+    {
+        up_down_index++;
+        return commands[up_down_index];
+    }
+
+    up_down_index = commands.size();
+    return "";
+}
+
+void History::resetUpDownIndex()
+{
+    up_down_index = commands.size();
 }
