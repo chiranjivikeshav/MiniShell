@@ -9,7 +9,7 @@ class LineEditor
     static void backSpace(std::string &buffer, size_t &cursor);
     static void startOfLine(std::string &buffer, size_t &cursor);
     static void endOfLine(std::string &buffer, size_t &cursor);
-    static void clearScreen();
+    static void clearScreen(const std::string &buffer,const size_t &cursor);
     static void autoCompletePlaceHolder();
     static void escapeSequence(std::string &buffer, size_t &cursor);
     static void normalCharacter(std::string &buffer, size_t &cursor, char &c);

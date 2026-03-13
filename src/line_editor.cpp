@@ -62,7 +62,7 @@ std::string LineEditor::readLine()
         // CTRL+L
         else if (c == 12)
         {
-            clearScreen();
+            clearScreen(buffer, cursor);
         }
 
         // TAB
@@ -108,9 +108,13 @@ void LineEditor::endOfLine(std::string &buffer, size_t &cursor)
     refreshLine(buffer, cursor);
 }
 
-void LineEditor::clearScreen()
+void LineEditor::clearScreen(const std::string &buffer, const size_t &cursor)
 {
-    std::cout << "\033[2J\033[H";
+    // clear screen
+    std::cout << "\033[2J";
+    // move cursor to top
+    std::cout << "\033[H";
+    refreshLine(buffer, cursor);
 }
 
 void LineEditor::autoCompletePlaceHolder()
