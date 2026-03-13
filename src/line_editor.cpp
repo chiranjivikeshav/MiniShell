@@ -2,6 +2,10 @@
 #include "history.h"
 #include <termios.h>
 #include <unistd.h>
+#include <dirent.h>
+#include <cstdlib>
+#include <sstream>
+#include <algorithm>
 #include <iostream>
 #include <vector>
 
@@ -68,7 +72,7 @@ std::string LineEditor::readLine()
         // TAB
         else if (c == '\t')
         {
-            autoCompletePlaceHolder();
+            autoCompletePlaceHolder(buffer, cursor);
         }
 
         // ESCAPE SEQUENCE (arrow keys)
@@ -117,9 +121,113 @@ void LineEditor::clearScreen(const std::string &buffer, const size_t &cursor)
     refreshLine(buffer, cursor);
 }
 
-void LineEditor::autoCompletePlaceHolder()
+void LineEditor::autoCompletePlaceHolder(std::string &buffer, size_t &cursor)
 {
-    std::cout << "\a";
+    // Extract the current token
+    std::string token;
+    size_t start = buffer.rfind(' ', cursor);
+
+    std::vector<std::string> matches;
+
+    if (start == std::string::npos)
+    {
+        token = buffer.substr(0, cursor);
+        matches = getCommandMatch(token);
+    }
+    else
+    {
+        token = buffer.substr(start + 1, cursor - start - 1);
+        matches = getDirectoryMatch(token);
+    }
+
+    if (matches.empty())
+    {
+        std::cout << "\a";
+    }
+    else if (matches.size() == 1)
+    {
+        std::string completion = matches[0].substr(token.size());
+
+        buffer.insert(cursor, completion);
+        cursor += completion.size();
+
+        refreshLine(buffer, cursor);
+    }
+    else
+    {
+        std::cout << "\n";
+
+        size_t count = std::min(matches.size(), MAX_VIEW);
+
+        for (size_t i = 0; i < count; ++i)
+            std::cout << matches[i] << "  ";
+
+        if (matches.size() > MAX_VIEW)
+            std::cout << "\n... (" << matches.size() - MAX_VIEW << " more)";
+
+        std::cout << "\n";
+
+        refreshLine(buffer, cursor);
+    }
+}
+
+std::vector<std::string> LineEditor:: getDirectoryMatch(const std::string &token)
+{
+    if (token.empty()) return {};
+
+    DIR* dir = opendir(".");
+    struct dirent* entry;
+
+    std::vector<std::string> matches;
+
+    while ((entry = readdir(dir)) != nullptr)
+    {
+        std::string name = entry->d_name;
+
+        if (name.rfind(token, 0) == 0)
+            matches.push_back(name);
+    }
+    closedir(dir);
+    return matches;
+}
+
+std::vector<std::string> LineEditor::getCommandMatch(const std::string &token)
+{
+    if (token.empty()) return {};
+
+    std::vector<std::string> matches;
+
+    const char* pathEnv = getenv("PATH");
+    if (!pathEnv)
+        return matches;
+
+    std::stringstream ss(pathEnv);
+    std::string dir;
+
+    while (std::getline(ss, dir, ':'))
+    {
+        DIR* d = opendir(dir.c_str());
+        if (!d)
+            continue;
+
+        struct dirent* entry;
+
+        while ((entry = readdir(d)) != nullptr)
+        {
+            std::string name = entry->d_name;
+
+            if (name.rfind(token, 0) == 0)
+                matches.push_back(name);
+        }
+
+        closedir(d);
+    }
+
+    // remove duplicates
+    std::sort(matches.begin(), matches.end());
+    matches.erase(std::unique(matches.begin(), matches.end()), matches.end());
+
+    return matches;
 }
 
 void LineEditor::escapeSequence(std::string &buffer, size_t &cursor)
