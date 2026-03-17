@@ -17,6 +17,7 @@
 void Shell::run()
 {
     SignalHandler::setupShellSignals();
+    atexit(History::saveHistory);
 
     std::string command;
     History history;

@@ -7,6 +7,7 @@ class SignalHandler
     static void setupShellSignals();
     static void setupChildSignals();
     static void shellSigintHandler(int);
+    static void shellExitHandler(int);
 };
 
 #endif

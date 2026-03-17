@@ -20,7 +20,6 @@ int Executor::execute(const Command& cmd)
     }
     if (cmd.name == "exit")
     {
-        History::saveHistory();
         exit(0);
     }
     if (cmd.name == "cd")
