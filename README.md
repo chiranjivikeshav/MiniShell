@@ -1,16 +1,7 @@
 <div align="center">
-
-<table border="0" cellpadding="0" cellspacing="0" align="center">
-  <tr>
-    <td valign="middle">
-      <img src="minishell_pkg/usr/share/icons/hicolor/512x512/apps/mnsh.png" alt="" height="100"/>
-    </td>
-    <td valign="middle">
-      <font size="8"><b style="font-weight: 600; font-family:monospace">MiniShell</b></font>
-    </td>
-  </tr>
-</table>
-
+<p align="center">
+  <img src="minishell_pkg/usr/share/icons/mnsh_banner.png" width="100%" style="max-width:500px; vertical-align:middle;"/>
+</p>
 <br/>
 
 ![Language](https://img.shields.io/badge/Language-C%2B%2B17-e74c3c?style=flat-square&logo=c%2B%2B&logoColor=white)
