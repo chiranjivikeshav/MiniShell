@@ -1,8 +1,7 @@
 <div align="center">
 <p align="center">
-  <img src="minishell_pkg/usr/share/icons/mnsh_banner.png" width="100%" style="max-width:500px; vertical-align:middle;"/>
+  <img src="minishell_pkg/usr/share/icons/mnsh_banner.png" width="50%" style="max-width:500px; vertical-align:middle;"/>
 </p>
-<br/>
 
 ![Language](https://img.shields.io/badge/Language-C%2B%2B17-e74c3c?style=flat-square&logo=c%2B%2B&logoColor=white)
 ![Standard](https://img.shields.io/badge/Standard-POSIX-2ecc71?style=flat-square)
